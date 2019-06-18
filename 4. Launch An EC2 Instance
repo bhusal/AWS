@@ -1,0 +1,79 @@
+4. Launch An EC2 Instance
+
+1. Login to AWS console and go to EC2 service, and record the region information
+Note: 
+- EC2 Instance is a region specific service
+- EC2 instances created in one region will not be available to other regions.
+- Create your EC2 instance based on your customer
+
+2. From EC2 dashboard, click on “Launch”
+3. Select an operating system. 
+- Select Amazon Linux because it has repo and other stuffs are already set up.
+
+4: Select t2.micro (Free tier eligible) and Click on “Next Configure Instance Details”
+
+5. Rest leave default and click on “Add storage”
+
+6. Next Add Tags. 
+This section is good for query later for billing and other stuff. This is optional key-value pair field, used to categorize the
+servers. such as  Dev, Test, UAT, PROD.
+You can click on "Add another Tag" and can add other key values to represent your host.
+Click  “Next Configure SecurityGroup”
+
+7. Click on Create a new Security group (by default it is selected)
+Name: expsecurity
+
+ssh is already added, add http as well and source - anywhere
+
+8. Click on “Launch”
+
+9. You will see a pop up, “Select an existing key pair or create a new key pair” page.
+select Create a new key pair
+Specify the name for key pair and click on download Key Pair.
+
+You must have to save this key and use it to login to AWS OS instances.
+
+10. Click on Launch Instances
+
+11. Wait for about 3-4 minutes, Your vm will be running.
+Click on your VM and get the public IP or DNS name and also record instance ID from description section.
+
+
+Now, here is a challenging part.
+
+If you already installed MobaXterm, or gitbash on your windows machine, just open and ready to use.
+
+If you plan to use putty and puttygen, you have to perform the following tasks.
+Note: putty does not recognize .pem file. We have to convert .pem to .ppk file format.
+You can convert it using puttygen tool.
+
+1. Open Puttygen
+
+2. Click on Load and select the key you downloaded from AWS.
+
+3. Click on Save provate key and save it to your PC.
+
+4. Save the converted key.
+
+5. Open your putty and paste IP or DNS from your OS instance.
+ - go to expand ssh option and go to ssh -> auth and specify the translated key location .ppk file
+or
+login to aws console -> select the OS instance -> click on connect and copy the login path.
+Once copied, paste it to the prompt.
+once login, type
+sudo su -
+will make you super user.
+
+
+Note: the user you will be using based on OS type is as follows
+OS type		User name
+------------		--------------
+Linux AMI		ec2-user
+Centos		centos
+Debian		admin adn root
+Fedora		ec2-user or fedora
+rhel		ec2-user or root
+suse		ec2-user or root
+ubuntu		ubuntu or root
+Custom AMI	checi with AM support
+
