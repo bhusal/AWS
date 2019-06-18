@@ -1,0 +1,95 @@
+S3 Bucket Size / Usage10 Ways To Know
+BY ANKAM RAVI KUMAR 
+
+Amazon Simple Storage is an object storage, which provides users to almost unlimited storage space. N Number of storage objects into S3 Bucket, however after storing the lot of objects we would like to know how much of storage we have utilized. In this article i will show you how to get S3 Bucket Size / Usage using simple 10 ways.
+
+Method1: S3 Bucket Size
+Use this article to aws configure to authenticate against AWS resources, required AWS CLI configuration first.
+
+aws s3 ls s3://BUCKETNAME --recursive | grep -v -E "(Bucket: |Prefix: |LastWriteTime|^$|--)" | awk 'BEGIN {total=0}{total+=$3}END{print total/1024/1024/1024" GB"}'
+above one liner will recursively list all the objects in S3 storage and capture all the objects size and sum value will be displayed in GB’s.
+
+Method2: S3 Bucket Usage
+aws s3api list-object-versions --bucket BUCKETNAME --output json --query "[sum(Versions[].Size)]"
+using s3api call list all the S3 objects and get sum value in bytes. Convert bytes value to KB or MB or GB or TB divided by 1024
+
+Method3
+aws s3 ls s3://BUCKET --recursive --human-readable --summarize
+it will list all objects in s3 bucket and in the end of output, it will display number of objects and size
+
+Total Objects: 81734
+Total Size: 493.7 GiB
+CloudBerry Explorer
+Use Cloud Berry Explorer will tell you size of S3 bucket
+
+cloudberry S3 bucket size
+cloudberry
+
+its so simple add Access Key and Secret key from AWS IAM user into cloud berry after installation
+
+s3cmd
+One more way is to get usage amazon simple storage
+
+cd /etc/yum.repos.d/wget https://s3tools.org/repo/RHEL_6/s3tools.repo
+yum install s3cmd
+Now configure s3cmd
+
+$ s3cmd --configure
+
+Access Key: ACCESSKEY
+Secret Key: SECRETKEY
+Default Region [US]:
+S3 Endpoint [s3.amazonaws.com]:
+DNS-style bucket+hostname:port template for accessing a bucket [%(bucket)s.s3.amazonaws.com]:
+Encryption password:
+Path to GPG program [/usr/bin/gpg]:
+Use HTTPS protocol [Yes]:
+HTTP Proxy server name:
+
+New settings:
+Access Key: ACCESSKEY
+Secret Key: SECRETKEY
+Default Region: US
+S3 Endpoint: s3.amazonaws.com
+DNS-style bucket+hostname:port template for accessing a bucket: %(bucket)s.s3.amazonaws.com
+Encryption password:
+Path to GPG program: /usr/bin/gpg
+Use HTTPS protocol: True
+HTTP Proxy server name:
+HTTP Proxy server port: 0
+
+Test access with supplied credentials? [Y/n] y
+Please wait, attempting to list all buckets...
+Success. Your access key and secret key worked fine :-)
+
+Save settings? [y/N] y
+Configuration saved to '/home/user/.s3cfg'
+run s3cmd to get the output. It will display in size bytes
+
+$ s3cmd du
+$ s3cmd du s3://NAME
+Using S3 Bucket Metrics
+To find out size of S3 bucket using AWS web GUI
+
+Login to AWS Console
+Click the S3 bucket name
+Select “Management” tab
+Click “Metrics” navigation button
+By default you should see Storage metric of the bucket
+s3 metrics
+s3 metrics
+
+Use S3 Browser
+Install and configure S3 browser to authenticate against your aws credentials
+
+Click on bucket Name and Click on “Properties Tab”
+
+s3 browser
+s3 browser
+
+Note: There are many other ways to know S3 Bucket Size / Usage.
+
+Best way is to login to AWS Console if you have console access other wise use aws cli ot aws boto
+
+
+https://server-computer.com/s3-bucket-size-usage/
