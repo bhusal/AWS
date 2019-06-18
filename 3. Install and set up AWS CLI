@@ -1,0 +1,42 @@
+Note: For this task to be completed, you need to create an IAM account with programatic access where user should be able to use cmd prompt.
+
+3. Install and set up AWS CLI
+
+1. Google aws CLI install for windows and Download the appropriate MSI installer for your operating system (32/64 bit)
+from
+https://s3.amazonaws.com/aws-cli/AWSCLI64.msi
+https://s3.amazonaws.com/aws-cli/AWSCLI32.msi
+
+2. Double click on your version of installer
+
+3. Open your vommand prompt (dos for windows) and verify AWS version just installed on your system.
+> aws –version.
+
+4. Now, configure AWS with CLI 
+You need to copy the following information
+Access key and secret access key and region
+
+> aws configure
+
+Enter access key ID:
+Enter secret access key
+Region: 
+
+Note: If you want to reconfigure your credentials then the config location is:
+C:\Users\user-name\.aws
+
+open a file config for region info
+[ default ]
+region = us-west-1]
+
+open credential file
+[ default ]
+aws_access_key_id =
+aws_secret_key =
+
+
+By now, you CLI is ready to use.
+Cerate a bucket using the command 
+> aws s3 mb s3://expdev25 
+
+
